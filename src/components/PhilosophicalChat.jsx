@@ -89,55 +89,55 @@ const PhilosophicalChat = () => {
     };
 
     return (
-        <div>
-            <h2 className="text-2xl font-bold mb-4 text-gray-800 text-center">Socrates</h2>
-            <div className="bg-gray-50 rounded-lg p-4 mb-4 h-[300px] overflow-y-auto">
+        <div className="container-fluid p-3">
+            <h2 className="text-center mb-4">Socrates</h2>
+            <div className="bg-light rounded p-3 mb-3" style={{height: "300px", overflowY: "auto"}}>
                 {messages.map((message, index) => (
-                    <div key={index} className={`mb-2 ${message.role === 'user' ? 'text-right' : 'text-left'}`}>
-                        <span className={`inline-block p-2 rounded-lg text-sm ${message.role === 'user' ? 'bg-red-700 text-white' : 'bg-gray-200'}`}>
+                    <div key={index} className={`d-flex ${message.role === 'user' ? 'justify-content-end' : 'justify-content-start'} mb-2`}>
+                        <span className={`p-2 rounded-pill ${message.role === 'user' ? 'bg-danger text-white' : 'bg-secondary text-white'}`}>
                             {message.content}
                         </span>
                     </div>
                 ))}
                 {isLoading && (
-                    <div className="text-center text-gray-500">
+                    <div className="text-center text-muted">
                         Thinking...
                     </div>
                 )}
                 <div ref={messagesEndRef} />
             </div>
-            <form onSubmit={handleSubmit} className="flex gap-2">
-                <input
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    className="flex-1 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-700"
-                    placeholder="Ask me anything..."
-                    disabled={isLoading}
-                />
-                <button 
-                    type="submit"
-                    disabled={isLoading}
-                    className="bg-red-700 text-white px-4 py-2 rounded hover:bg-red-800 transition-colors disabled:bg-gray-400"
-                >
-                    Send
-                </button>
-                <button
-                    type="button"
-                    onClick={startNewConversation}
-                    className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors"
-                >
-                    New
-                </button>
+            <form onSubmit={handleSubmit}>
+                <div className="row g-2">
+                    <div className="col-12">
+                        <input
+                            type="text"
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            className="form-control"
+                            placeholder="Ask me anything..."
+                            disabled={isLoading}
+                        />
+                    </div>
+                    <div className="col-6">
+                        <button 
+                            type="submit" 
+                            disabled={isLoading}
+                            className="btn btn-danger w-100"
+                        >
+                            Send
+                        </button>
+                    </div>
+                    <div className="col-6">
+                        <button 
+                            type="button"
+                            onClick={startNewConversation}
+                            className="btn btn-danger w-100"
+                        >
+                            New
+                        </button>
+                    </div>
+                </div>
             </form>
-            {messages.length > 0 && (
-                <button
-                    onClick={handleSaveConversation}
-                    className="mt-4 w-full bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors"
-                >
-                    Save Conversation
-                </button>
-            )}
         </div>
     );
 };
