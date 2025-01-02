@@ -9,6 +9,7 @@ import { AuthProvider } from './context/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
 import SavedConversations from './components/SavedConversations';
 import ConversationView from './components/ConversationView';
+import About from './components/About';
 
 const Home = () => (
     <div className="container mx-auto px-4 mt-8">
@@ -22,15 +23,6 @@ const Home = () => (
                 <PhilosophicalChat />
             </div>
         </div>
-    </div>
-);
-
-const About = () => (
-    <div className="container mx-auto px-4 mt-8">
-        <h1 className="text-xl text-gray-800">
-            Welcome to The Mad Gadfly - a platform for engaging in Socratic dialogue and philosophical debate. 
-            Challenge your assumptions, explore new perspectives, and engage in meaningful discourse with our AI interlocutor.
-        </h1>
     </div>
 );
 

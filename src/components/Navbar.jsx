@@ -35,7 +35,7 @@ const Navbar = () => {
                             <Link className="nav-link active" aria-current="page" to="/">Home</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/saved">Saved Chats</Link>
+                            <Link to="/saved" className="nav-link">Saved Chats</Link>
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="/about">About</Link>

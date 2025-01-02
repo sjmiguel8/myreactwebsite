@@ -138,6 +138,14 @@ const PhilosophicalChat = () => {
                     </div>
                 </div>
             </form>
+            {messages.length > 0 && (
+                <button
+                    onClick={handleSaveConversation}
+                    className="btn btn-success w-100 mt-3"
+                >
+                    Save Conversation
+                </button>
+            )}
         </div>
     );
 };

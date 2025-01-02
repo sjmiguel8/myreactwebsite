@@ -22,37 +22,69 @@ const SavedConversations = () => {
         fetchConversations();
     }, [user]);
 
+    const handleDelete = async (conversationId) => {
+        if (!window.confirm('Are you sure you want to delete this conversation?')) {
+            return;
+        }
+
+        try {
+            const conversationsRef = doc(db, 'conversations', conversationId);
+            await deleteDoc(conversationsRef);
+            setConversations(conversations.filter(conv => conv.id !== conversationId));
+        } catch (error) {
+            console.error('Error deleting conversation:', error);
+        }
+    };
+
     return (
-        <div className="mt-4">
-            <h2 className="text-xl font-bold mb-4">Saved Conversations</h2>
+        <div className="container mt-4">
+            <h2 className="text-center mb-4">Saved Conversations</h2>
             {loading ? (
-                <p>Loading...</p>
-            ) : conversations.length === 0 ? (
-                <p>No saved conversations yet.</p>
-            ) : (
-                conversations.map((conv) => (
-                    <div key={conv.id} className="bg-white p-4 rounded-lg shadow mb-4">
-                        <p className="text-sm text-gray-500">
-                            {new Date(conv.timestamp).toLocaleString()}
-                        </p>
-                        {conv.messages.map((msg, idx) => (
-                            <div
-                                key={idx}
-                                className={`mt-2 ${
-                                    msg.role === 'user' ? 'text-right' : 'text-left'
-                                }`}
-                            >
-                                <span className={`inline-block p-2 rounded-lg ${
-                                    msg.role === 'user' 
-                                        ? 'bg-red-700 text-white' 
-                                        : 'bg-gray-200'
-                                }`}>
-                                    {msg.content}
-                                </span>
-                            </div>
-                        ))}
+                <div className="text-center">
+                    <div className="spinner-border text-danger" role="status">
+                        <span className="visually-hidden">Loading...</span>
                     </div>
-                ))
+                </div>
+            ) : conversations.length === 0 ? (
+                <div className="alert alert-info text-center">
+                    No saved conversations yet.
+                </div>
+            ) : (
+                <div className="row">
+                    {conversations.map((conv) => (
+                        <div key={conv.id} className="col-12 mb-4">
+                            <div className="card">
+                                <div className="card-header d-flex justify-content-between align-items-center">
+                                    <span>Conversation from {new Date(conv.timestamp).toLocaleString()}</span>
+                                    <div>
+                                        <button
+                                            className="btn btn-sm btn-danger"
+                                            onClick={() => handleDelete(conv.id)}
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="card-body" style={{ maxHeight: '300px', overflowY: 'auto' }}>
+                                    {conv.messages.map((msg, idx) => (
+                                        <div
+                                            key={idx}
+                                            className={`d-flex ${msg.role === 'user' ? 'justify-content-end' : 'justify-content-start'} mb-2`}
+                                        >
+                                            <span className={`p-2 rounded-pill ${
+                                                msg.role === 'user' 
+                                                    ? 'bg-danger text-white' 
+                                                    : 'bg-secondary text-white'
+                                            }`}>
+                                                {msg.content}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             )}
         </div>
     );
