@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { getUserConversations } from '../services/chatService';
+import { doc, deleteDoc } from 'firebase/firestore';
+import { db } from '../firebase/firebase';
 
 const SavedConversations = () => {
     const [conversations, setConversations] = useState([]);
