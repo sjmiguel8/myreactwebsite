@@ -63,10 +63,6 @@ const PhilosophicalChat = () => {
             setMessages(prev => [...prev, aiMessage]);
         } catch (error) {
             console.error('Error:', error);
-            setMessages(prev => [...prev, {
-                role: 'assistant',
-                content: 'I apologize, but I encountered an error. Please check the console for details and ensure your API key is properly configured.'
-            }]);
         } finally {
             setIsLoading(false);
         }

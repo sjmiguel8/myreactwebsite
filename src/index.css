@@ -3,68 +3,20 @@ body {
 }
 
 .navbar {
-    background-color: #343a40;
+    background-color: #dc3545;
 }
 
-.navbar-brand {
-    color: #fff;
+.card {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.nav-link {
-    color: #fff;
+.btn-primary {
+    background-color: #dc3545;
+    border-color: #dc3545;
 }
 
-.nav-link:hover {
-    color: #f8f9fa;
-}
-
-.navbar-toggler {
-    border-color: #fff;
-}
-
-.navbar-toggler-icon {
-    color: #fff;
-}
-
-.navbar-nav .nav-link.active {
-    color: #f8f9fa;
-}
-
-.navbar-nav .nav-link.active:hover {
-    color: #f8f9fa;
-}
-
-.navbar-nav {
-    display: flex;
-    align-items: center;
-}
-
-.navbar-nav .nav-item {
-    margin-right: 1rem;
-}
-
-.navbar-collapse {
-    flex-grow: 1;
-    align-items: center;
-}
-
-.navbar-collapse.show {
-    display: flex;
-    flex-direction: column;
-}
-
-@media (max-width: 991.98px) {
-    .navbar-collapse {
-        padding: 1rem 0;
-    }
-    
-    .navbar-nav {
-        flex-direction: column;
-    }
-
-    .navbar-nav .nav-item {
-        margin-right: 0;
-        margin-bottom: 0.5rem;
-    }
+.btn-primary:hover {
+    background-color: #bb2d3b;
+    border-color: #b02a37;
 }
 
