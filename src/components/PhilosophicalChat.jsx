@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import OpenAI from 'openai';
 import { useAuth } from '../context/AuthContext';
-import { saveConversation, getUserConversations } from '../services/chatService';
+import { saveConversation } from '../services/chatService';
+import TodoList from './TodoList';
 
 const PhilosophicalChat = () => {
     const [messages, setMessages] = useState([]);
@@ -86,62 +87,90 @@ const PhilosophicalChat = () => {
 
     return (
         <div className="container-fluid p-3">
-            <h2 className="text-center mb-4">Socrates</h2>
-            <div className="bg-light rounded p-3 mb-3" style={{height: "300px", overflowY: "auto"}}>
-                {messages.map((message, index) => (
-                    <div key={index} className={`d-flex ${message.role === 'user' ? 'justify-content-end' : 'justify-content-start'} mb-2`}>
-                        <span className={`p-2 rounded-pill ${message.role === 'user' ? 'bg-danger text-white' : 'bg-secondary text-white'}`}>
-                            {message.content}
-                        </span>
+            <div className="row">
+                <div className="col-md-8">
+                    <h2 className="text-center mb-4">Socrates</h2>
+                    <div className="bg-light rounded p-3 mb-3" style={{height: "400px", overflowY: "auto"}}>
+                        {messages.map((message, index) => (
+                            <div
+                                key={index}
+                                className={`d-flex ${message.role === 'user' ? 'justify-content-end' : 'justify-content-start'} mb-3`}
+                            >
+                                <div 
+                                    className={`p-3 rounded-3 ${
+                                        message.role === 'user' 
+                                            ? 'bg-danger text-white' 
+                                            : 'bg-secondary text-white'
+                                    }`}
+                                    style={{ 
+                                        maxWidth: '80%',
+                                        wordBreak: 'break-word',
+                                        whiteSpace: 'pre-wrap'
+                                    }}
+                                >
+                                    {message.content}
+                                </div>
+                            </div>
+                        ))}
+                        {isLoading && (
+                            <div className="text-center text-muted">
+                                Thinking...
+                            </div>
+                        )}
+                        <div ref={messagesEndRef} />
                     </div>
-                ))}
-                {isLoading && (
-                    <div className="text-center text-muted">
-                        Thinking...
-                    </div>
-                )}
-                <div ref={messagesEndRef} />
-            </div>
-            <form onSubmit={handleSubmit}>
-                <div className="row g-2">
-                    <div className="col-12">
-                        <input
-                            type="text"
-                            value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                            className="form-control"
-                            placeholder="Ask me anything..."
-                            disabled={isLoading}
-                        />
-                    </div>
-                    <div className="col-6">
-                        <button 
-                            type="submit" 
-                            disabled={isLoading}
-                            className="btn btn-danger w-100"
+                    <form onSubmit={handleSubmit}>
+                        <div className="row g-2">
+                            <div className="col-12">
+                                <input
+                                    type="text"
+                                    value={input}
+                                    onChange={(e) => setInput(e.target.value)}
+                                    className="form-control"
+                                    placeholder="Ask me anything..."
+                                    disabled={isLoading}
+                                />
+                            </div>
+                            <div className="col-6">
+                                <button 
+                                    type="submit" 
+                                    disabled={isLoading}
+                                    className="btn btn-danger w-100"
+                                >
+                                    Send
+                                </button>
+                            </div>
+                            <div className="col-6">
+                                <button 
+                                    type="button"
+                                    onClick={startNewConversation}
+                                    className="btn btn-danger w-100"
+                                >
+                                    New
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    {messages.length > 0 && (
+                        <button
+                            onClick={handleSaveConversation}
+                            className="btn btn-success w-100 mt-3"
                         >
-                            Send
+                            Save Conversation
                         </button>
-                    </div>
-                    <div className="col-6">
-                        <button 
-                            type="button"
-                            onClick={startNewConversation}
-                            className="btn btn-danger w-100"
-                        >
-                            New
-                        </button>
+                    )}
+                </div>
+                <div className="col-md-4">
+                    <div className="card">
+                        <div className="card-header">
+                            <h4 className="mb-0">Notes</h4>
+                        </div>
+                        <div className="card-body">
+                            <TodoList />
+                        </div>
                     </div>
                 </div>
-            </form>
-            {messages.length > 0 && (
-                <button
-                    onClick={handleSaveConversation}
-                    className="btn btn-success w-100 mt-3"
-                >
-                    Save Conversation
-                </button>
-            )}
+            </div>
         </div>
     );
 };

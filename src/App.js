@@ -8,6 +8,8 @@ import Login from './components/Login';
 import Register from './components/Register';
 import { AuthProvider } from './context/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
+import './index.css';
+import './App.css';
 
 const Home = () => (
     <div className="container mt-4">

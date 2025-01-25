@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { getUserConversations } from '../services/chatService';
-import { doc, deleteDoc } from 'firebase/firestore';
-import { db } from '../firebase/firebase';
 
 const SavedConversations = () => {
     const [conversations, setConversations] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [expandedId, setExpandedId] = useState(null);
     const { user } = useAuth();
 
     useEffect(() => {
@@ -24,18 +23,8 @@ const SavedConversations = () => {
         fetchConversations();
     }, [user]);
 
-    const handleDelete = async (conversationId) => {
-        if (!window.confirm('Are you sure you want to delete this conversation?')) {
-            return;
-        }
-
-        try {
-            const conversationsRef = doc(db, 'conversations', conversationId);
-            await deleteDoc(conversationsRef);
-            setConversations(conversations.filter(conv => conv.id !== conversationId));
-        } catch (error) {
-            console.error('Error deleting conversation:', error);
-        }
+    const toggleExpand = (id) => {
+        setExpandedId(expandedId === id ? null : id);
     };
 
     return (
@@ -55,31 +44,44 @@ const SavedConversations = () => {
                 <div className="row">
                     {conversations.map((conv) => (
                         <div key={conv.id} className="col-12 mb-4">
-                            <div className="card">
+                            <div 
+                                className="card" 
+                                onClick={() => toggleExpand(conv.id)}
+                                style={{ cursor: 'pointer' }}
+                            >
                                 <div className="card-header d-flex justify-content-between align-items-center">
                                     <span>Conversation from {new Date(conv.timestamp).toLocaleString()}</span>
-                                    <div>
-                                        <button
-                                            className="btn btn-sm btn-danger"
-                                            onClick={() => handleDelete(conv.id)}
-                                        >
-                                            Delete
-                                        </button>
-                                    </div>
+                                    <span className="text-muted">
+                                        {expandedId === conv.id ? 'Click to collapse' : 'Click to expand'}
+                                    </span>
                                 </div>
-                                <div className="card-body" style={{ maxHeight: '300px', overflowY: 'auto' }}>
+                                <div 
+                                    className="card-body" 
+                                    style={{ 
+                                        maxHeight: expandedId === conv.id ? 'none' : '300px',
+                                        overflowY: 'auto',
+                                        transition: 'max-height 0.3s ease-in-out'
+                                    }}
+                                >
                                     {conv.messages.map((msg, idx) => (
                                         <div
                                             key={idx}
-                                            className={`d-flex ${msg.role === 'user' ? 'justify-content-end' : 'justify-content-start'} mb-2`}
+                                            className={`d-flex ${msg.role === 'user' ? 'justify-content-end' : 'justify-content-start'} mb-3`}
                                         >
-                                            <span className={`p-2 rounded-pill ${
-                                                msg.role === 'user' 
-                                                    ? 'bg-danger text-white' 
-                                                    : 'bg-secondary text-white'
-                                            }`}>
+                                            <div 
+                                                className={`p-3 rounded-3 ${
+                                                    msg.role === 'user' 
+                                                        ? 'bg-danger text-white' 
+                                                        : 'bg-secondary text-white'
+                                                }`}
+                                                style={{ 
+                                                    maxWidth: '80%',
+                                                    wordBreak: 'break-word',
+                                                    whiteSpace: 'pre-wrap'
+                                                }}
+                                            >
                                                 {msg.content}
-                                            </span>
+                                            </div>
                                         </div>
                                     ))}
                                 </div>
