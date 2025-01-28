@@ -1,11 +1,36 @@
-body {
-    background-color: #f8f9fa;
+html, body {
+    margin: 0;
+    background-color: #000000 !important; /* Change this color using VS Code's color picker to change the background of all pages */
     color: #000000;
+    min-height: 100vh;
+    width: 100%;
 }
 
 .navbar {
-    background-color: #000000;
+    background-color: #000000 !important;
     padding: 50px 36px;
+    color: #000000;
+}
+
+.navbar-brand, .nav-link {
+    color: white !important;
+    font-size: 20px;
+}
+
+.navbar .btn-outline-light:hover {
+    background-color: #000000b1;
+}
+
+.navbar-text {
+    color: white;
+    font-family:'Courier New', Courier, monospace;
+}
+
+header {
+    background-color: #000000;
+    color: white;
+    padding: 1rem;
+    text-align: center;
 }
 
 .card {
@@ -21,4 +46,3 @@ body {
     background-color: #bb2d3b;
     border-color: #b02a37;
 }
-

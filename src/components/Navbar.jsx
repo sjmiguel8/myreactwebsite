@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import './Navbar.css';
 
 const Navbar = () => {
     const { user, logout } = useAuth();
@@ -17,7 +18,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-danger">
+        <nav className="navbar navbar-expand-lg navbar-dark">
             <div className="container">
                 <Link className="navbar-brand" to="/">The Mad Gadfly</Link>
                 <button 
@@ -68,4 +69,4 @@ const Navbar = () => {
     );
 };
 
-export default Navbar; 
+export default Navbar;

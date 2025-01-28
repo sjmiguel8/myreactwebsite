@@ -12,7 +12,7 @@ import './index.css';
 import './App.css';
 
 const Home = () => (
-    <div className="container mt-4">
+    <div className="container mt-4 bg-dark">
         <div className="row">
             <div className="col-md-12">
                 <PhilosophicalChat />

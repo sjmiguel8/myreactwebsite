@@ -1,15 +1,17 @@
 /* General styles */
-body {
+html, body {
     margin: 0;
-    font-family:'Roboto', sans-serif;
-    background-color: #f8f9fa;
+    padding: 0;
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
     color: #000000;
+    background-color: #ffffff;
 }
 
 /* Header styles */
 header {
-    background-color: #000000;
-    color: white;
+    background-color: #ffffff;
+    color: rgb(255, 255, 255);
     padding: 1rem;
     text-align: center;
 }
@@ -18,7 +20,8 @@ header {
 .navbar {
     background-color: #000000 !important;
     padding: 50px 36px;
-    color: #000000;
+    color: #ffffff;
+    height: 119px;
 }
 
 .navbar-brand, .nav-link {
@@ -27,7 +30,7 @@ header {
 }
 
 .navbar .btn-outline-light:hover {
-    background-color: #000000b1;
+    background-color: #ff0000b1;
 }
 
 .navbar-text {
@@ -39,18 +42,25 @@ header {
 .container {
     max-width: 1200px;
     margin: 0 auto;
+    background-color: #000000;
+    color: white;
+    border-radius: 0.75rem;
 }
 
 main {
     padding: 2rem;
     min-height: calc(100vh - 160px); /* Account for navbar and footer */
-    background-color: white;
+    border-radius: 0.25rem;
+    color: white;
+    background-color: #1b1b1b;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 /* Card styles */
 .card {
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
     margin-bottom: 1rem;
+    background-color: #1b1b1b;
 }
 
 /* Button styles */
@@ -66,13 +76,13 @@ main {
 
 /* Form styles */
 .form-control:focus {
-    border-color: #dc3545;
-    box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+    border-color: #000000;
+    box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.25);
 }
 
 /* Footer styles */
 footer {
-    background-color: #dc3545;
+    background-color: #000000;
     color: white;
     padding: 1rem;
     text-align: center;
