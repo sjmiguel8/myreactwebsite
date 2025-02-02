@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import OpenAI from 'openai';
 import { useAuth } from '../context/AuthContext';
-import { saveConversation } from '../services/chatService';
+import { saveConversation, sendMessage } from '../services/chatService';
 import TodoList from './TodoList';
 
 const PhilosophicalChat = () => {
@@ -29,38 +28,21 @@ const PhilosophicalChat = () => {
         setIsLoading(true);
 
         try {
-            const openai = new OpenAI({
-                apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-                dangerouslyAllowBrowser: true
-            });
-
-            const response = await openai.chat.completions.create({
-                model: 'gpt-3.5-turbo',
-                messages: [
-                    {
-                        role: 'system',
-                        content: `You are a philosophical debater combining Socratic questioning with strong counter-arguments. For each response:
-                            1. First, identify potential logical fallacies or weak points in the user's argument
-                            2. Ask 1-2 probing questions to expose these weaknesses
-                            3. Based on the conversation history and your questioning, present clear counter-arguments that:
-                               - Challenge their premises
-                               - Provide specific examples that contradict their position
-                               - Offer alternative viewpoints with supporting logic
-                            4. Maintain a respectful but assertive tone,
-                            5. Keep total response under 8 sentences,
-                            6. Never break character or format`
-                    },
-                    ...messages,
-                    userMessage
-                ],
-                max_tokens: 400,
-                temperature: 0.7
-            });
-
-            const aiMessage = {
-                role: 'assistant',
-                content: response.choices[0].message.content
+            const systemMessage = {
+                role: 'system',
+                content: `You are a philosophical debater combining Socratic questioning with strong counter-arguments. For each response:
+                    1. First, identify potential logical fallacies or weak points in the user's argument
+                    2. Ask 1-2 probing questions to expose these weaknesses
+                    3. Based on the conversation history and your questioning, present clear counter-arguments that:
+                       - Challenge their premises
+                       - Provide specific examples that contradict their position
+                       - Offer alternative viewpoints with supporting logic
+                    4. Maintain a respectful but assertive tone,
+                    5. Keep total response under 8 sentences,
+                    6. Never break character or format`
             };
+
+            const aiMessage = await sendMessage([systemMessage, ...messages, userMessage]);
             setMessages(prev => [...prev, aiMessage]);
         } catch (error) {
             console.error('Error:', error);
